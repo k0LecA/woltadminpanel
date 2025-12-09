@@ -1,0 +1,40 @@
+package com.example.courseprifs.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@DiscriminatorValue("RESTAURANT")
+public class Restaurant extends BasicUser {
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Cuisine> menuList;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FoodOrder> foodOrders;
+    private boolean isOpen;
+    private double minimumOrder;
+
+    public Restaurant(String login, String password, String name, String surname, String phoneNumber, String address) {
+        super(login, password, name, surname, phoneNumber, address);
+        this.isOpen = false;
+        this.minimumOrder = 9.0;
+    }
+    @Override
+    public String toString() {
+        String address = "";
+        if (getAddresses() != null && !getAddresses().isEmpty()) {
+            address = getAddresses().get(0).toString();
+        }
+
+        return name + " | " + address + " | " + (isOpen ? "Open" : "Closed");
+    }
+
+}
