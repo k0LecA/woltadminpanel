@@ -173,12 +173,15 @@ public class MainForm implements Initializable {
     }
 
     private void setUserFormVisibility() {
-        if (currentUser instanceof User) {
-            //turbut nieko nedarom, gal kazka custom
+        System.out.println("setUserFormVisibility");
+        System.out.println("currentUser = " + currentUser);
+        System.out.println("currentUser class = " + (currentUser == null ? "null" : currentUser.getClass()));
 
-        } else if (currentUser instanceof Restaurant) {
+        if (currentUser instanceof Restaurant) {
+            System.out.println("setUserFormVisibility2");
 //            altTab.setDisable(true);
             tabsPane.getTabs().remove(altTab); //Man net nesugeneruos sito tabo
+            tabsPane.getTabs().remove(userTab);
         }
 
     }
