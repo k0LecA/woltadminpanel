@@ -231,8 +231,15 @@ public class MainForm implements Initializable {
             List<FoodOrder> foodOrders = getFoodOrders();
             ordersList.getItems().addAll(foodOrders);
             //double check kodel rodo per daug vartotoju
-            clientList.getItems().addAll(customHibernate.getAllRecords(BasicUser.class));
-            //jei dirbsit su ListView:
+            //List<User> userList = customHibernate.getAllRecords(User.class);
+            clientList.getItems().addAll(
+                    customHibernate.getAllRecords(User.class)
+                            .stream()
+                            .filter(u -> u instanceof BasicUser && !(u instanceof Restaurant))
+                            .map(u -> (BasicUser) u)
+                            .toList()
+            );
+
             basicUserList.getItems().addAll(customHibernate.getAllRecords(BasicUser.class));
             restaurantField.getItems().addAll(customHibernate.getAllRecords(Restaurant.class));
             orderStatusField.getItems().addAll(OrderStatus.values());
